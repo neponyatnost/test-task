@@ -21,20 +21,3 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ url: `http://localhost:3000/?key=${key}` })
 }
-
-export const config = {
-  api: {
-    bodyParser: false,
-    externalResolver: true,
-  },
-}
-
-export function onSocket(req: any, res: any) {
-  if (req.url.startsWith('/api/secret')) {
-    wss.handleUpgrade(req, req.socket, Buffer.alloc(0), onConnection)
-  }
-}
-
-function onConnection(ws: any, req: any) {
-  wss.emit('connection', ws, req)
-}
